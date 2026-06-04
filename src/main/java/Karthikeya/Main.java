@@ -14,18 +14,18 @@ public class Main {
         s1.setsName("gavr"); //dulicates are not allowed in the database
 
         s1.setRollNo(2);
-        s1.setsAge(5555);
+        s1.setsAge(23);
 
-        Student s2 = null;
 
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(Karthikeya.Student.class)
                 .configure()
                 .buildSessionFactory();
         Session session = sf.openSession();
-
+        Transaction trans = session.beginTransaction();
+        session.merge(s1);
         //session.persist(s1);
-    s2 = session.get(Student.class,101);
+        trans.commit();
         session.close();
         sf.close();
 
