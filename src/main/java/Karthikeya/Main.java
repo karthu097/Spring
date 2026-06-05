@@ -22,11 +22,13 @@ public class Main {
                 .configure()
                 .buildSessionFactory();
         Session session = sf.openSession();
+        s1 = session.get(Student.class,101);
         Transaction trans = session.beginTransaction();
-        session.merge(s1);
+        session.merge(s1); // we use merge to update opr create.
         //session.persist(s1);
+
+        session.remove(s1);
         trans.commit();
-        session.close();
         sf.close();
 
         System.out.println(s1);
