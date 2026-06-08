@@ -11,11 +11,10 @@ import jakarta.persistence.*;
 public class Alien {
     @Id
     private int aid;
-
-    @Column(name="alien_name") //for changing the column name we use this anotation
     private String aname;
-    @Transient // generally we use this for skipping this column
     private String tech;
+    @OneToOne
+    private Laptop Laptop;// here laptop is the complex type
 
     public int getAid() {
         return aid;
@@ -40,15 +39,22 @@ public class Alien {
     public void setTech(String tech) {
         this.tech = tech;}
 
-    @Override
-
-    public String toString() {
-            return "Alien{" +
-                    "aid=" + aid +
-                    ", aname='" + aname + '\'' +
-                    ", tech='" + tech + '\'' +
-                    '}';
-        }
-
+    public Laptop getLaptop() {
+        return Laptop;
     }
+
+    public void setLaptop(Laptop laptop) {
+        Laptop = laptop;
+    }
+
+    @Override
+    public String  toString() {
+        return "Alien{" +
+                "aid=" + aid +
+                ", aname='" + aname + '\'' +
+                ", tech='" + tech + '\'' +
+                ", Laptop=" + Laptop +
+                '}';
+    }
+}
 
