@@ -2,48 +2,43 @@ package Karthikeya;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import java.util.*;
-
-import java.util.Arrays;
-
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args){
-        Laptop l1 = new Laptop();
-        l1.setLid(4);
-        l1.setBrand("HP");
-        l1.setModel("Victus");
-        l1.setRam(32);
-
-
-
+    public static void main(String[] args) {
 
         SessionFactory sf = new Configuration()
-       /*  Here you need to use the class what you need for the manuplating */
                 .addAnnotatedClass(Laptop.class)
+                .addAnnotatedClass(Alien.class)
                 .configure()
                 .buildSessionFactory();
+
         Session session = sf.openSession();
 
-        //SELECT * FROM Laptop where ram = 32 --> SQL
-        // from laptop where ram  32 -->HQL
+        String brand = "HP";
 
+        Query<Object[]> query = session.createQuery(
+                "select brand, model from Laptop where brand = :brand",
+                Object[].class
+        );
 
-        Query query = session.createQuery("from Laptop where ram=32",Laptop.class);
-        List<Laptop> laptops = query.getResultList();
+        query.setParameter("brand", brand);
 
-        //Laptop l5 = session.find(Laptop.class,3);
-        System.out.println(laptops);
+        List<Object[]> laptops = query.getResultList();
+
+        for (Object[] data : laptops) {
+            String laptopBrand = (String) data[0];
+            String model = (String) data[1];
+
+            System.out.println("Brand: " + laptopBrand +
+                    ", Model: " + model);
+        }
 
         session.close();
 
         sf.close();
-
-
-
     }
 }
