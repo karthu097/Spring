@@ -38,6 +38,7 @@ public class Main {
         }
 
         session.close();
+
         sf.close();
     }
 }
