@@ -2,6 +2,8 @@ package Karthikeya;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Laptop {
 
@@ -10,8 +12,8 @@ public class Laptop {
     private String brand;
     private String model;
     private int ram;
-    @ManyToOne
-    private Alien alien;
+    @ManyToMany
+    private List<Alien> aliens;
 
     public int getLid() {
         return lid;
@@ -45,12 +47,12 @@ public class Laptop {
         this.ram = ram;
     }
 
-    public Alien getAlien() {
-        return alien;
+    public List<Alien> getAliens() {
+        return aliens;
     }
 
-    public void setAlien(Alien alien) {
-        this.alien = alien;
+    public void setAliens(List<Alien> aliens) {
+        this.aliens = aliens;
     }
 
     @Override
@@ -58,10 +60,25 @@ public class Laptop {
         return "Laptop{" +
                 "lid=" + lid +
                 ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
                 ", ram=" + ram +
-                '}';
+                ", model='" + model + '\'' +
+                '}'; // if we add toString for the aliens then we get infinite recursion
     }
-
-
 }
+/*
+Alien.toString()
+    ↓
+prints laptops
+    ↓
+Laptop.toString()                  this leads to StackOverFlow
+    ↓
+prints aliens
+    ↓
+Alien.toString()
+    ↓
+prints laptops
+    ↓
+Laptop.toString()
+    ↓
+...
+ */
