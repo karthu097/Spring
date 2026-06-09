@@ -77,6 +77,7 @@ public class Main {
         trans.commit();
 
         Alien a5 = session.find(Alien.class,102); // get() method haves been deprecated in 7.1.0 but not removed
+        Laptop l5 = session.find(Laptop.class,101);
 
         System.out.println(a5);
         session.close();
