@@ -15,7 +15,7 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
-    @OneToMany(mappedBy = "alien")
+    @ManyToMany
     private List<Laptop> laptops;// here laptop is the complex type
 
     public int getAid() {
@@ -55,10 +55,26 @@ public class Alien {
                 "aid=" + aid +
                 ", aname='" + aname + '\'' +
                 ", tech='" + tech + '\'' +
-                ", laptops=" + laptops +
                 '}';
     }
 }
+/*
+Alien.toString()
+    ↓
+prints laptops
+    ↓
+Laptop.toString()                  this leads to StackOverFlow
+    ↓
+prints aliens
+    ↓
+Alien.toString()
+    ↓
+prints laptops
+    ↓
+Laptop.toString()
+    ↓
+...
+ */
 
 
 
