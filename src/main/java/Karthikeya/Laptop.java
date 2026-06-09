@@ -12,7 +12,7 @@ public class Laptop {
     private String brand;
     private String model;
     private int ram;
-    @ManyToMany
+    @ManyToMany(mappedBy = "laptops")
     private List<Alien> aliens;
 
     public int getLid() {
