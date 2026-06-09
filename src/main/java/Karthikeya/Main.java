@@ -40,19 +40,9 @@ public class Main {
         a2.setAname("Ravi");
         a2.setTech("Python");
 
-        Alien a3 = new Alien();
-        a3.setAid(103);
-        a3.setAname("Harsh");
-        a3.setTech("C++");
-
         a1.setLaptops(Arrays.asList(l1,l2));
-        a2.setLaptops(Arrays.asList(l2,l3));
-        a3.setLaptops(Arrays.asList(l1));
+        a2.setLaptops(Arrays.asList(l3));
 
-
-        l1.setAliens(Arrays.asList(a1,a3));
-        l2.setAliens(Arrays.asList(a1,a2));
-        l3.setAliens(Arrays.asList(a2));
 
 
         SessionFactory sf = new Configuration()
@@ -71,16 +61,23 @@ public class Main {
 
         session.persist(a1);
         session.persist(a2);
-        session.persist(a3);
+
 
 
         trans.commit();
 
-        Alien a5 = session.find(Alien.class,102); // get() method haves been deprecated in 7.1.0 but not removed
-        Laptop l5 = session.find(Laptop.class,101);
 
-        System.out.println(a5);
+
+
         session.close();
+
+        Session session1 = sf.openSession();
+        Alien a5 = session1.find(Alien.class,101);// get() method haves been deprecated in 7.1.0 but not removed
+
+        //System.out.println(a5);
+        // if you are not using print statement also the output executes
+
+        session1.close();
         sf.close();
 
 

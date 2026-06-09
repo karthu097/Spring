@@ -15,7 +15,7 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
-    @ManyToMany
+    @OneToMany(fetch =FetchType.EAGER) // by default the fetch type is lazy
     private List<Laptop> laptops;// here laptop is the complex type
 
     public int getAid() {
@@ -39,7 +39,8 @@ public class Alien {
     }
 
     public void setTech(String tech) {
-        this.tech = tech;}
+        this.tech = tech;
+    }
 
     public List<Laptop> getLaptops() {
         return laptops;
@@ -55,6 +56,7 @@ public class Alien {
                 "aid=" + aid +
                 ", aname='" + aname + '\'' +
                 ", tech='" + tech + '\'' +
+                ", laptops=" + laptops +
                 '}';
     }
 }
